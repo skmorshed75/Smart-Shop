@@ -7,9 +7,12 @@ use App\Models\User;
 use App\Mail\OTPMail;
 use App\Helper\JWTToken;
 use Firebase\JWT\JWT;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+
+use function Laravel\Prompts\alert;
 
 class UserController extends Controller
 {
@@ -132,6 +135,27 @@ class UserController extends Controller
             ],201);
         }
     }
+
+    function LoginPage():View{
+        return view('pages.auth.login-page');
+    }
+
+    function RegistrationPage():View{
+        return view('pages.auth.registration-page');
+    }
+
+    function SendOtpPage():View{
+        return view('pages.auth.send-otp-page');
+    }
+
+    function VerifyOtpPage():View{
+        return view('pages.auth.verify-otp-page');
+    }
+
+    function ResetPasswordPage():View{
+        return view('pages.auth.reset-password-page');
+    }
+
 }
 
 
