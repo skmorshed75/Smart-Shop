@@ -50,9 +50,10 @@ async function SubmitLogin(){
             window.location.href = "/dashboard"; //after successful login
         } else {
             //alert(result.status);
-            errorToast(result.data['messsage']);
-        } 
-        
+            //errorToast("Invalid User ID or Password");
+            errorToast(result.data['message']);
+            //errorToast(result.data['message']);
+        }         
     }
 }
     /*
