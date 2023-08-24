@@ -133,6 +133,10 @@ class UserController extends Controller
         }
     }
 
+    function UserLogout(Request $request){
+        return redirect('/userLogin')->cookie('token','',-1);
+    }
+
     function LoginPage():View{
         return view('pages.auth.login-page');
     }
