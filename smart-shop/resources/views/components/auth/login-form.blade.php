@@ -6,9 +6,9 @@
                     <form action="" onsubmit="return false">
                         <h4>SIGN IN</h4>
                         <br/>
-                        <input id="email" placeholder="User Email" class="form-control" type="email"/>
+                        <input id="email" autofocus placeholder="User Email" class="form-control" type="email"/>
                         <br/>
-                        <input id="password" placeholder="User Password" class="form-control" type="password"/>
+                        <input id="password" autofocus placeholder="User Password" class="form-control" type="password"/>
                         <br/>
                         <button onclick="SubmitLogin()" class="btn w-100 btn-primary">Next</button>
                         <hr/>
