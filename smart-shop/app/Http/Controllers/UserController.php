@@ -139,6 +139,7 @@ class UserController extends Controller
         return redirect('/userLogin')->cookie('token','',-1);
     }
 
+    //SHOW PROFILE DETAILS THROUGH USER PROFILE FORM profile-form.php
     function UserProfile(Request $request){
         $email = $request->header('email');
         $user = User::where('email','=',$email)->first();
@@ -168,6 +169,7 @@ class UserController extends Controller
                 'status' => 'success',
                 'message' => 'User Updated',
             ], 200);
+
         } catch(Exception $e){
             return response()->json([
                 'status' => 'fail',

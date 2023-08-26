@@ -10,7 +10,7 @@
                             <div class="row m-0 p-0">
                                 <div class="col-md-4 p-2">
                                     <label>Email Address</label>
-                                    <input id="email" placeholder="User Email" class="form-control" type="email"/>
+                                    <input readonly id="email" placeholder="User Email" class="form-control" type="email"/>
                                 </div>
                                 <div class="col-md-4 p-2">
                                     <label>First Name</label>
@@ -31,7 +31,7 @@
                             </div>
                             <div class="row m-0 p-0">
                                 <div class="col-md-4 p-2">
-                                    <button onclick="onUpdate()" class="btn mt-3 w-100  btn-primary">Update</button>
+                                    <button onclick="updateProfile()" class="btn mt-3 w-100  btn-primary">Update Profile</button>
                                 </div>
                             </div>
                         </form>
@@ -42,7 +42,63 @@
     </div>
 </div>
 <script>
-    
+
+    getProfileDetails(); //SHOW PROFILE DETAILS THROUGH FORM
+    async function getProfileDetails(){
+        showLoader();
+        let result = await axios.get("/user-profile");
+        hideLoader();
+
+        if(result.status === 200 && result.data['status'] === 'success'){
+            let data = result.data['data'];
+            document.getElementById('email').value = data.email;
+            document.getElementById('firstName').value = data['firstName']; //Alternative of previous line
+            document.getElementById('lastName').value = data['lastName'];
+            document.getElementById('mobile').value = data['mobile'];
+            document.getElementById('password').value = data['password'];
+        }
+        else {
+            errorToast(result.data['message']);
+        }
+    }
+
+    //WHILE CLICK IN UPDATE PROFILE BUTTON
+    async function updateProfile(){
+        let email = document.getElementById('email').value;
+        let firstName = document.getElementById('firstName').value;
+        let lastName = document.getElementById('lastName').value;
+        let mobile = document.getElementById('mobile').value;
+        let password = document.getElementById('password').value
+
+        if(firstName.length === 0){
+            errorToast("First Name is Required");
+        } else if(lastName.length ===0){
+            errorToast("Last Name is Required");
+        } else if(mobile.length === 0){
+            errorToast("Mobile Number is required");
+        } else if(password.length === 0){
+            errorToast("Password is Required");
+        } else {
+            showLoader();
+            let result = await axios.post("/user-update",{
+                firstName:firstName,
+                lastName:lastName,
+                mobile:mobile,
+                password:password
+            });
+            hideLoader();
+
+            if(result.status === 200 && result.data['status'] === 'success'){
+                successToast("Profile Updated Successfully!!!");
+                await getProfileDetails; //Refresh Form with updated data
+                /*setTimeout(function(){
+                    window.location.ref = "/userLogin"
+                }, 1000);
+                */
+            }
+        }
+    }
+/*
     profileDetails();
     async function profileDetails(){
         let result = await axios.get("/");
@@ -103,6 +159,6 @@
             }
         }
     }
-
+*/
 
 </script>
