@@ -14,7 +14,7 @@
             <table class="table" id="tableData">
                 <thead>
                 <tr class="bg-light">
-                    <th>No</th>
+                    <th>Sl No</th>
                     <th>Category</th>
                     <th>Action</th>
                 </tr>
@@ -32,7 +32,35 @@
 
 getList();
 
+async function getList(){
+    showLoader();
+    result = await axios.get("/list-category");
+    hideLoader();
 
+    //let tableData = document.getElementById('tableData'); //IN JAVASCRIPT
+    //alternative using jQuery
+    let tableData = $('#tableData'); //IN JQUERY
+
+    //let tableList = document.getElementById('tableList'); //IN JAVASCRIPT
+    let tableList = $('#tableList'); //IN JQUERY
+    
+    result.data.forEach(function(item, index){
+        let row = `<tr>
+                    <td>${index+1}</td>
+                    <td>${item['name']}</td>
+                    <td>
+                        <button class = "btn btn-sm btn-outline-info">Edit</button>    
+                        <button class = "btn btn-sm btn-outline-danger">Delete</button>    
+                    </td>
+                </tr>`
+        tableList.append(row)
+    });
+
+    tableData.DataTable();
+}
+
+
+/*
 async function getList() {
 
 
@@ -82,5 +110,6 @@ async function getList() {
     });
    
 }
+*/
 </script>
 

@@ -10,14 +10,16 @@
     <link href="{{asset('css/fontawesome.css')}}" rel="stylesheet" />
     <link href="{{asset('css/style.css')}}" rel="stylesheet" />
     <link href="{{asset('css/toastify.min.css')}}" rel="stylesheet" />
+
     <link href="{{asset('css/jquery.dataTables.min.css')}}" rel="stylesheet" />
-    {{-- <link href="{{asset('css/jquery.dataTables.select.min.css')}}" rel="stylesheet" /> --}}
     <script src="{{asset('js/jquery.min.js')}}"></script>
     <script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('js/dataTables.select.min.js')}}"></script>
+
     <script src="{{asset('js/toastify-js.js')}}"></script>
     <script src="{{asset('js/axios.min.js')}}"></script>
     <script src="{{asset('js/config.js')}}"></script>
+    <script src="{{asset('js/bootstrap.bundle.js')}}"></script>
 </head>
 
 <body>
@@ -96,9 +98,6 @@
     <i class="fa fa-chevron-circle-right text-dark"></i>
     <span class="side-bar-item-caption">Report</span>    
 </a>
-
-
-<script src="{{asset('js/bootstrap.bundle.js')}}"></script>
 
 <script>
     function MenuBarClickHandler() {
