@@ -27,6 +27,7 @@ Route::post('user-update',[UserController::class,'UpdateProfile'])
 //User Logout
 Route::get('/user-logout',[UserController::class,'UserLogout']);
 
+
 //Page Routes
 Route::get('/userLogin',[UserController::class,'LoginPage']);
 Route::get('/userRegistration',[UserController::class,'RegistrationPage']);
@@ -42,6 +43,9 @@ Route::get('/categoryPage',[CategoryController::class,'CategoryPage'])
     ->middleware([TokenVerificationMiddleware::class]);
 Route::get('/customerPage',[CustomerController::class,'CustomerPage'])
     ->middleware([TokenVerificationMiddleware::class]);
+Route::get('/productPage',[ProductController::class,'ProductPage'])
+    ->middleware([TokenVerificationMiddleware::class]);
+
 
 //CATEGORY API
 Route::post('/create-category',[CategoryController::class,'CategoryCreate'])
@@ -64,6 +68,7 @@ Route::post('/create-customer',[CustomerController::class,'CustomerCreate'])
 Route::post('/delete-customer',[CustomerController::class,'CustomerDelete'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/update-customer',[CustomerController::class,'CustomerUpdate'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/customer-by-id',[CustomerController::class,'CustomerById'])->middleware([TokenVerificationMiddleware::class]);
+
 
 //PRODUCT API
 Route::post('/create-product',[ProductController::class,'ProductCreate'])

@@ -15,7 +15,7 @@
                 <thead>
                 <tr class="bg-light">
                     <th>Icon</th>
-                    <th>Name</th>
+                    <th>Product Name</th>
                     <th>Unit</th>
                     <th>Price</th>
                     <th>Action</th>
@@ -37,9 +37,8 @@ getList();
 
 async function getList() {
 
-
     showLoader();
-    let res=await axios.get("/list-product");
+    let result=await axios.get("/list-product");
     hideLoader();
 
     let tableData = $('#tableData');
@@ -48,15 +47,15 @@ async function getList() {
     tableData.DataTable().destroy();
     tableList.empty();
 
-    res.data.forEach(function(item, index){
+    result.data.forEach(function(item, index){
         let row = `<tr>
             <td><img alt = "image" class = "w-25" src = "/${item['img_url']}"></td>
             <td>${item['name']}</td>
             <td>${item['unit']}</td>
             <td>${item['price']}</td>
             <td>
-                <button data-id = "${item['id']}" class = "btn edit btn-sm btn-outline-success">Edit</button>
-                <button data-id = "${item['id']}" class = "btn delete btn-sm btn-outline-danger">Delete</button>
+                <button data-path = "${item['img_url']}" data-id = "${item['id']}" class = "btn editBtn btn-sm btn-outline-success">Edit</button>
+                <button data-path = "${item['img_url']}" data-id = "${item['id']}" class = "btn deleteBtn btn-sm btn-outline-danger">Delete</button>
 
             </td>
         </tr>`;
@@ -64,18 +63,26 @@ async function getList() {
         tableList.append(row);
     })
 
-    $('.edit').on('click', function(){
+    $('.editBtn').on('click', async function(){
         let id = $(this).data('id');
-        alert(id);
-    })
+        let filePath = $(this).data('path');
+        //alert(id);
+        await FillUpUpdateForm(id,filePath);
+        $("#update-modal").modal('show');
+    });
 
-    $('.delete').on('click', function(){
+    $('.deleteBtn').on('click', function(){
         let id = $(this).data('id');
-        alert(id);
-    })
+        let filePath = $(this).data('path');
+
+        $("#delete-modal").modal('show');
+        $("#deleteID").val(id);
+        $("#deleteFilePath").val(filePath);
+
+    });
 
     tableData.DataTable({
-        lengthMenu: [5,10,15,20,25,30,35,40,45,50],
+        lengthMenu: [5,15,20,25,30,35,40,45,50],
         language: {
             paginate: {
                 next: '&#8594;',// ->
