@@ -5,12 +5,12 @@
                 <h5 class="modal-title" id="exampleModalLabel">Update Category</h5>
             </div>
             <div class="modal-body">
-                <form id="update-form">
+                <form id="update-form" onsubmit="return false">
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
                                 <label class="form-label">Category Name *</label>
-                                <input type="text" class="form-control" id="categoryNameUpdate">
+                                <input autofocus type="text" class="form-control" id="categoryNameUpdate">
                                 <input class="d-none" id="updateID">
                             </div>
                         </div>
@@ -25,16 +25,14 @@
     </div>
 </div>
 
-
 <script>
-
-
    async function FillUpUpdateForm(id){
         document.getElementById('updateID').value=id;
         showLoader();
         let res=await axios.post("/category-by-id",{id:id})
         hideLoader();
         document.getElementById('categoryNameUpdate').value=res.data['name'];
+        document.getElementById('categoryNameUpdate').focus();
     }
 
     async function Update() {

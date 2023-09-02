@@ -31,6 +31,41 @@
 
 <script>
 
+    $('#create-modal').on('shown.bs.modal', function () {
+        $('#customerName').focus();
+    });
+
+    async function Save(){
+        let customerName = document.getElementById('customerName').value;
+        let cusTomerEmail = document.getElementById('customerEmail').value;
+        let customerMobile = document.getElementById('customerMobile').value;
+
+        if(customerName.length === 0){
+            errorToast("Customer Name cannot be empty");
+        } else if(cusTomerEmail.length === 0){
+            errorToast("Customer Email cannot be empty");
+        } else if(customerMobile.length === 0){
+            errorToast("Customer Mobile cannot be empty");
+        } else {
+            document.getElementById('modal-close').click();
+            showLoader();
+            let result = await axios.post('/create-customer',{
+                name:customerName,
+                email:cusTomerEmail,
+                mobile:customerMobile
+            });
+            hideLoader();
+
+            if(result.status === 201){
+                successToast("Request Completed");
+                document.getElementById('save-form').reset();
+                await getList();
+            } else {
+                errorToast("Request not Completed");
+            }
+        }
+    }
+/*
     async function Save() {
 
         let customerName = document.getElementById('customerName').value;
@@ -67,5 +102,5 @@
             }
         }
     }
-
+*/
 </script>

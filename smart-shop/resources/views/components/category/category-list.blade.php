@@ -44,19 +44,47 @@ async function getList(){
     //let tableList = document.getElementById('tableList'); //IN JAVASCRIPT
     let tableList = $('#tableList'); //IN JQUERY
     
+    tableData.DataTable().destroy();
+    tableList.empty();
+
     result.data.forEach(function(item, index){
         let row = `<tr>
                     <td>${index+1}</td>
                     <td>${item['name']}</td>
                     <td>
-                        <button class = "btn btn-sm btn-outline-info">Edit</button>    
-                        <button class = "btn btn-sm btn-outline-danger">Delete</button>    
+                        <button data-id="${item['id']}" class = "btn editBtn btn-sm btn-outline-info">Edit</button>    
+                        <button data-id= "${item['id']}" class = "btn deleteBtn btn-sm btn-outline-danger">Delete</button>    
                     </td>
                 </tr>`
         tableList.append(row)
     });
+/*
+    tableData.DataTable({
+        order:[0,'desc'],
+        lengthMenu:[5,10,15,20]
+    });
+OR */
 
-    tableData.DataTable();
+    new DataTable('#tableData',{
+        order:[0,'desc'],
+        lengthMenu:[10,25,50,100]
+    });
+
+    $(".editBtn").on('click', async function(){
+        let id = $(this).data('id');
+        await FillUpUpdateForm(id); 
+        $("#update-modal").modal('show');
+
+        //alert(id);
+    });
+
+    $(".deleteBtn").on('click',function(){
+        let id = $(this).data('id');
+        //alert(id);
+        $("#delete-modal").modal('show');
+        $("#deleteID").val(id);
+    });
+
 }
 
 

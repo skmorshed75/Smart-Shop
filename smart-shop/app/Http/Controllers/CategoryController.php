@@ -37,4 +37,11 @@ class CategoryController extends Controller
             'name' => $request->input('name')
         ]);
     }
+
+    //Update / Edit Category Data
+    function CategoryById(Request $request){
+        $category_id = $request->input('id');
+        $user_id = $request->header('id');
+        return Category::where('id',$category_id)->where('user_id',$user_id)->first();
+    }
 }

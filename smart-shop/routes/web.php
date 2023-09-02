@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductController;
 use App\Http\Middleware\TokenVerificationMiddleware;
-
+use App\Models\Customer;
 
 //API Routes
 Route::post('/user-registration',[UserController::class,'UserRegistration']);
@@ -38,6 +40,8 @@ Route::get('/userProfile',[UserController::class,'ProfilePage'])
     ->middleware([TokenVerificationMiddleware::class]);
 Route::get('/categoryPage',[CategoryController::class,'CategoryPage'])
     ->middleware([TokenVerificationMiddleware::class]);
+Route::get('/customerPage',[CustomerController::class,'CustomerPage'])
+    ->middleware([TokenVerificationMiddleware::class]);
 
 //CATEGORY API
 Route::post('/create-category',[CategoryController::class,'CategoryCreate'])
@@ -48,3 +52,25 @@ Route::post('/update-category',[CategoryController::class,'CategoryUpdate'])
     ->middleware([TokenVerificationMiddleware::class]);
 Route::post('/delete-category',[CategoryController::class,'CategoryDelete'])
     ->middleware([TokenVerificationMiddleware::class]);
+Route::post('/category-by-id',[CategoryController::class,'CategoryById'])
+    ->middleware([TokenVerificationMiddleware::class]);
+
+
+//CUSTOMER API
+Route::get('/list-customer',[CustomerController::class,'CustomerList'])
+->middleware([TokenVerificationMiddleware::class]);
+Route::post('/create-customer',[CustomerController::class,'CustomerCreate'])
+->middleware([TokenVerificationMiddleware::class]);
+Route::post('/delete-customer',[CustomerController::class,'CustomerDelete'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/update-customer',[CustomerController::class,'CustomerUpdate'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/customer-by-id',[CustomerController::class,'CustomerById'])->middleware([TokenVerificationMiddleware::class]);
+
+//PRODUCT API
+Route::post('/create-product',[ProductController::class,'ProductCreate'])
+->middleware([TokenVerificationMiddleware::class]);
+Route::post('/delete-product',[ProductController::class,'ProductDelete'])
+->middleware([TokenVerificationMiddleware::class]);
+Route::post('/product-by-id',[ProductController::class,'ProductById'])
+->middleware([TokenVerificationMiddleware::class]);
+Route::get('/list-product',[ProductController::class,'ProductList'])->middleware([TokenVerificationMiddleware::class]);
+Route::post('/update-product',[ProductController::class,'UpdateProduct'])->middleware([TokenVerificationMiddleware::class]);

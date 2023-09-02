@@ -31,9 +31,6 @@
 
 
 <script>
-
-
-
     async function FillUpUpdateForm(id){
         document.getElementById('updateID').value=id;
         showLoader();
@@ -42,6 +39,7 @@
         document.getElementById('customerNameUpdate').value=res.data['name'];
         document.getElementById('customerEmailUpdate').value=res.data['email'];
         document.getElementById('customerMobileUpdate').value=res.data['mobile'];
+        document.getElementById('customerNameUpdate').focus();
     }
 
 

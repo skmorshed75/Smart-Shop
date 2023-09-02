@@ -36,8 +36,6 @@ getList();
 
 
 async function getList() {
-
-
     showLoader();
     let res=await axios.get("/list-customer");
     hideLoader();
@@ -66,8 +64,8 @@ async function getList() {
 
     $('.editBtn').on('click', function(){
         let id = $(this).data('id');
-        //await FillUpUpdateForm(id)
-        //$("#update-modal").modal('show');        
+         FillUpUpdateForm(id);
+        $("#update-modal").modal('show');        
     })
 
     $('.deleteBtn').on('click', function(){
@@ -82,7 +80,8 @@ async function getList() {
     // });
 
     tableData.DataTable({
-        lengthMenu: [5,10,15,20,25,30,35,40,45,50],
+        lengthMenu: [15,20,25,30,35,40,45,50],
+        order:[[0,'desc']],
         language: {
             paginate: {
                 next: '&#8594;',// ->
