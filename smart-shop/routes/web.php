@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Middleware\TokenVerificationMiddleware;
 use App\Models\Customer;
@@ -45,6 +46,10 @@ Route::get('/customerPage',[CustomerController::class,'CustomerPage'])
     ->middleware([TokenVerificationMiddleware::class]);
 Route::get('/productPage',[ProductController::class,'ProductPage'])
     ->middleware([TokenVerificationMiddleware::class]);
+Route::get('/invoicePage',[InvoiceController::class,'InvoicePage'])
+    ->middleware([TokenVerificationMiddleware::class]);
+Route::get('/salePage',[InvoiceController::class,'SalePage'])
+    ->middleware([TokenVerificationMiddleware::class]);
 
 
 //CATEGORY API
@@ -79,3 +84,14 @@ Route::post('/product-by-id',[ProductController::class,'ProductById'])
 ->middleware([TokenVerificationMiddleware::class]);
 Route::get('/list-product',[ProductController::class,'ProductList'])->middleware([TokenVerificationMiddleware::class]);
 Route::post('/update-product',[ProductController::class,'UpdateProduct'])->middleware([TokenVerificationMiddleware::class]);
+
+
+//INVOICE API
+Route::post('/invoice-create',[InvoiceController::class,'invoiceCreate'])
+    ->middleware([TokenVerificationMiddleware::class]);
+Route::get('/invoice-list',[InvoiceController::class,'invoiceList'])
+    ->middleware([TokenVerificationMiddleware::class]);
+Route::post('/invoice-details',[InvoiceController::class,'invoiceDetails'])
+    ->middleware([TokenVerificationMiddleware::class]);
+Route::post('/invoice-delete',[InvoiceController::class,'invoiceDelete'])
+    ->middleware([TokenVerificationMiddleware::class]);
