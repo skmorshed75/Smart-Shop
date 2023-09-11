@@ -88,6 +88,7 @@ class InvoiceController extends Controller
         DB::beginTransaction();
         try{
             $user_id = $request->header('id');
+            //echo $user_id . "  " . $request->input('inv_id');
             InvoiceProduct::where('invoice_id',$request->input('inv_id'))
                 ->where('user_id',$user_id)
                 ->delete();
