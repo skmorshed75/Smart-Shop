@@ -92,8 +92,6 @@
     </div>
 
 
-
-
     <div class="modal animated zoomIn" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered">
             <div class="modal-content">
@@ -184,14 +182,14 @@
             let discountPercentage=(parseFloat(document.getElementById('discountP').value));
 
             InvoiceItemList.forEach((item,index)=>{
-                Total=Total+parseFloat(item['sale_price'])
+                Total=Total+parseFloat(item['sale_price']) //parseFloat = converted to Float
             })
 
              if(discountPercentage===0){
-                 Vat= ((Total*5)/100).toFixed(2);
+                 Vat= ((Total*5)/100).toFixed(2); //VAT CALCULATION WITH %
              }
              else {
-                 Discount=((Total*discountPercentage)/100).toFixed(2);
+                 Discount=((Total*discountPercentage)/100).toFixed(2); //DISCOUNT CALCULATION WITH %
                  Total=(Total-((Total*discountPercentage)/100)).toFixed(2);
                  Vat= ((Total*5)/100).toFixed(2);
              }
@@ -221,7 +219,7 @@
            else if(PPrice.length===0){
                errorToast("Product Price Required");
            }
-           else if(PQty.length===0){
+           else if(PQty.length===0) {
                errorToast("Product Quantity Required");
            }
            else{
@@ -232,9 +230,6 @@
                ShowInvoiceItem();
            }
         }
-
-
-
 
         function addModal(id,name,price) {
             document.getElementById('PId').value=id
