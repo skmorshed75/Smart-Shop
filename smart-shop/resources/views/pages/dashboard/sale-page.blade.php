@@ -7,7 +7,7 @@
                     <div class="row">
                         <div class="col-8">
                             <span class="text-bold text-dark">BILLED TO </span>
-                            <p class="text-xs mx-0 my-1">Name:  <span id="CName"></span> </p>
+                            <p class="text-xs mx-0 my-1">Name: <b> <span id="CName"></span></b> </p>
                             <p class="text-xs mx-0 my-1">Email:  <span id="CEmail"></span></p>
                             <p class="text-xs mx-0 my-1">User ID:  <span id="CId"></span> </p>
                         </div>
@@ -38,12 +38,13 @@
                     <hr class="mx-0 my-2 p-0 bg-secondary"/>
                     <div class="row">
                        <div class="col-12">
-                           <p class="text-bold text-xs my-1 text-dark"> TOTAL: <i class="bi bi-currency-dollar"></i> <span id="total"></span></p>
-                           <p class="text-bold text-xs my-2 text-dark"> PAYABLE: <i class="bi bi-currency-dollar"></i>  <span id="payable"></span></p>
-                           <p class="text-bold text-xs my-1 text-dark"> VAT(5%): <i class="bi bi-currency-dollar"></i>  <span id="vat"></span></p>
-                           <p class="text-bold text-xs my-1 text-dark"> Discount: <i class="bi bi-currency-dollar"></i>  <span id="discount"></span></p>
+                           <p class="text-bold text-xs my-1 text-dark"> Product Price : <i class="bi bi-currency-dollar"></i> <span id="total"></span></p>
+                           <p class="text-bold text-xs my-1 text-dark"> (+) VAT(5%) : <i class="bi bi-currency-dollar"></i>  <span id="vat"></span></p>
+                           <p class="text-bold text-xs my-1 text-dark"> (-) Discount : <i class="bi bi-currency-dollar"></i>  <span id="discount"></span></p>
                            <span class="text-xxs">Discount(%):</span>
-                           <input onkeydown="return false" value="0" min="0" type="number" step="0.25" onchange="DiscountChange()" class="form-control w-40 " id="discountP"/>
+                           {{-- <input onkeydown="return false" value="0" min="0" type="number" step="0.25" onchange="DiscountChange()" class="form-control w-40 " id="discountP"/> --}}
+                           <input value="0" min="0" type="number" oninput="DiscountChange()" class="form-control w-40 " id="discountP"/>
+                           <p class="text-bold text-xs my-2 text-dark"> Net Payable : <i class="bi bi-currency-dollar"></i>  <span id="payable"></span></p>
                            <p>
                               <button onclick="createInvoice()" class="btn  my-3 bg-gradient-primary w-40">Confirm</button>
                            </p>
@@ -180,12 +181,18 @@
             let Payable=0;
             let Discount=0;
             let discountPercentage=(parseFloat(document.getElementById('discountP').value));
+            let tmpValue=document.getElementById('discountP').value;
+            
+            //TO SET DISCOUNT FIELD AS 0 IF IT IS NULL
+            if (tmpValue === ""){
+                discountPercentage=0;
+            }
 
             InvoiceItemList.forEach((item,index)=>{
                 Total=Total+parseFloat(item['sale_price']) //parseFloat = converted to Float
             })
 
-             if(discountPercentage===0){
+            if(discountPercentage===0){
                  Vat= ((Total*5)/100).toFixed(2); //VAT CALCULATION WITH %
              }
              else {

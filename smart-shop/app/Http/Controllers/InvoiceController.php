@@ -9,11 +9,12 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Models\InvoiceProduct;
 use Illuminate\Support\Facades\DB;
+use alert;
 
 class InvoiceController extends Controller
 {
     function InvoicePage():View{
-        //xxxxxxxxxxxxx
+        return view('pages.dashboard.invoice-page');
     }
 
     function SalePage():View{
@@ -71,6 +72,7 @@ class InvoiceController extends Controller
 
 
     function invoiceDetails(Request $request){
+        
         $user_id = $request->header('id');
         $customerDetails = Customer::where('user_id', $user_id)->where('id', $request->input('cus_id'))->first();
         $invoiceTotal = Invoice::where('user_id', $user_id)->where('id', $request->input('inv_id'))->first();
