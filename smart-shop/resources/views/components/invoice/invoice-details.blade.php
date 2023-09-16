@@ -12,14 +12,14 @@
                         <div class="row">
                             <div class="col-8">
                                 <span class="text-bold text-dark">BILLED TO </span>
-                                <p class="text-xs mx-0 my-1">Name:  <span id="CName"></span> </p>
+                                <p class="text-xs mx-0 my-1"><b>Name:  <span id="CName"></span> </b></p>
                                 <p class="text-xs mx-0 my-1">Email:  <span id="CEmail"></span></p>
                                 <p class="text-xs mx-0 my-1">User ID:  <span id="CId"></span> </p>
                             </div>
                             <div class="col-4">
                                 <img class="w-40" src="{{"images/logo.png"}}">
                                 <p class="text-bold mx-0 my-1 text-dark">Invoice  </p>
-                                <p class="text-xs mx-0 my-1">Date: {{ date('Y-m-d') }} </p>
+                                <p class="text-xs mx-0 my-1"> Date : <span id = "InvDate"></span></p>
                             </div>
                         </div>
                         <hr class="mx-0 my-2 p-0 bg-secondary"/>
@@ -43,8 +43,8 @@
                         <div class="row">
                             <div class="col-12">
                                 <p class="text-bold text-xs my-1 text-dark"> Product Price : <i class="bi bi-currency-dollar"></i> <span id="total"></span></p>
-                                <p class="text-bold text-xs my-1 text-dark"> (+) VAT(5%): <i class="bi bi-currency-dollar"></i>  <span id="vat"></span></p>
-                                <p class="text-bold text-xs my-1 text-dark"> (-) Discount: <i class="bi bi-currency-dollar"></i>  <span id="discount"></span></p>
+                                <p class="text-bold text-xs my-1 text-dark"> (+) VAT(5%) : <i class="bi bi-currency-dollar"></i>  <span id="vat"></span></p>
+                                <p class="text-bold text-xs my-1 text-dark"> (-) Discount : <i class="bi bi-currency-dollar"></i>  <span id="discount"></span></p>
                                 <p class="text-bold text-xs my-2 text-dark"> Total Payable : <i class="bi bi-currency-dollar"></i>  <span id="payable"></span></p>
                             </div>
 
@@ -68,29 +68,48 @@
         let res=await axios.post("/invoice-details",{cus_id:cus_id,inv_id:inv_id});
         hideLoader();
 
-            document.getElementById('CName').innerText=res.data['customer']['name']
-            document.getElementById('CId').innerText=res.data['customer']['user_id']
-            document.getElementById('CEmail').innerText=res.data['customer']['email']
-            document.getElementById('total').innerText=res.data['invoice']['total']
-            document.getElementById('payable').innerText=res.data['invoice']['payable']
-            document.getElementById('vat').innerText=res.data['invoice']['vat']
-            document.getElementById('discount').innerText=res.data['invoice']['discount']
-    
-    
-            let invoiceList=$('#invoiceList');
-    
-            invoiceList.empty();
-    
-            res.data['product'].forEach(function (item,index) {
-                let row=`<tr class="text-xs">
-                            <td>${item['product']['name']}</td>
-                            <td>${item['qty']}</td>
-                            <td>${item['sale_price']}</td>
-                         </tr>`
-                invoiceList.append(row)
-            });
-    
-            $("#details-modal").modal('show')
+        let name = res.data.customer.name
+        let user_id = res.data.customer.user_id
+        let email = res.data.customer.email
+
+
+        let total = res.data.invoice.total
+        let payable = res.data.invoice.payable
+        let vat = res.data.invoice.vat
+        let discount = res.data.invoice.discount
+        let invDate = res.data.invoice.created_at
+        invDate = invDate.slice(0,10);
+        // console.log(invDate);
+        //console.log(res.data);
+
+        //CUSTOMER TABLE
+        document.getElementById('CName').innerText = name
+        document.getElementById('CId').innerText = user_id
+        document.getElementById('CEmail').innerText = email
+
+        //INVOICE TABLE
+        document.getElementById('total').innerText = total
+        document.getElementById('payable').innerText = payable
+        document.getElementById('vat').innerText = vat
+        document.getElementById('discount').innerText = discount
+        document.getElementById('InvDate').innerText = invDate
+
+
+        let invoiceList=$('#invoiceList');
+
+        invoiceList.empty();
+
+        //PRODUCT TABLE
+        res.data.product.forEach(function (item,index) {
+            let row=`<tr class="text-xs">
+                        <td>${item.name}</td>
+                        <td>${item.qty}</td>
+                        <td>${item.sale_price}</td>
+                        </tr>`
+            invoiceList.append(row)
+        });
+
+        $("#details-modal").modal('show')
     }
 
     function PrintPage() {

@@ -72,13 +72,31 @@ class InvoiceController extends Controller
 
 
     function invoiceDetails(Request $request){
-        
-        $user_id = $request->header('id');
-        $customerDetails = Customer::where('user_id', $user_id)->where('id', $request->input('cus_id'))->first();
-        $invoiceTotal = Invoice::where('user_id', $user_id)->where('id', $request->input('inv_id'))->first();
-        $invoiceProduct = InvoiceProduct::where('invoice_id',$request->input('inv_id'))->where('user_id', $user_id)->get();
 
-        return array([
+        $user_id = $request->header('id');
+        $customerId = $request->input('cus_id');
+        $invoiceId = $request->input('inv_id');
+        
+        $customerDetails = Customer::where('user_id', $user_id)
+                                ->where('id', $customerId)
+                                ->first();
+
+        $invoiceTotal = Invoice::where('user_id', $user_id)
+                                ->where('id', $invoiceId)
+                                ->first();
+
+        $invoiceProduct = InvoiceProduct::join('products', 'invoice_products.product_id', '=', 'products.id')
+                                    ->where('invoice_products.invoice_id',$invoiceId)
+                                    ->where('invoice_products.user_id', $user_id)
+                                    ->get();
+
+        // return array(
+        //     'customer' => $customerDetails,
+        //     'invoice' => $invoiceTotal,
+        //     'product' => $invoiceProduct
+        // );
+
+        return response()->json([
             'customer' => $customerDetails,
             'invoice' => $invoiceTotal,
             'product' => $invoiceProduct
